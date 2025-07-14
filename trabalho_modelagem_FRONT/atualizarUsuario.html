@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="progatualizar.js"defer></script>
-    <title>Document</title>
+    <script src="progatualizar.js" defer></script>
+    <title>Atualizar Pedido</title>
 </head>
 <body>
     <header>
@@ -17,25 +17,40 @@
         </nav>
     </header>
     <main>
-        <h1>Programa para atualização de dados do cliente</h1>
-    </main>
-<label for="nome">Digite o nome do cliente</label><br>
+        <h1>Programa para atualização de Usuarios</h1>
+
+        <label for="id">ID do Pedido:</label><br>
+        <input type="number" id="id" placeholder="ID do pedido"><br><br>
+
+        <label for="nome">Digite o primeiro nome do cliente</label><br>
 <input type="text" id="nome" placeholder="Nome"><br><br>
 
 <label for="sobrenome">Digite o sobrenome do cliente</label><br>
 <input type="text" id="sobrenome" placeholder="sobrenome"><br><br>
 
-<label for="cpf">Digite o nome do cliente</label><br>
-<input type="text" id="cpf" placeholder="cpf"><br><br>
+<label for="idade">Digite a idade do cliente</label><br>
+<input type="text" id="idade" placeholder="idade"><br><br>
 
 <label for="email">Digite o email do cliente</label><br>
 <input type="text" id="email" placeholder="email"><br><br>
 
 <label for="telefone">Digite o telefone do cliente</label><br>
-<input type="text" id="cadastro" placeholder="telefone"><br><br>
+<input type="text" id="telefone" placeholder="telefone"><br><br>
 
-<button onclick="atualizar">atualizar</button>
-<div id="res"></div>
+<label for="endereco">Digite o endereço do cliente</label><br>
+<input type="text" id="endereco" placeholder="endereco"><br><br>
+
+<label for="cidade">Digite a cidade do cliente</label><br>
+<input type="text" id="cidade" placeholder="cidade"><br><br>
+
+<label for="estado">Digite o estado do cliente</label><br>
+<input type="text" id="estado" placeholder="estado"><br><br>
+
+<label for="nascimento">Digite a data de nascimento do cliente</label><br>
+<input type="text" id="nascimento" placeholder="nascimento"><br><br>
+
+        <button id="btnAtualizar">Atualizar</button>
+        <div id="res"></div>
+    </main>
 </body>
-
 </html>

@@ -2,7 +2,7 @@ let res = document.getElementById('res');
 let lisFab = document.getElementById('lisFab');
 
 lisFab.addEventListener('click', () => {
-  res.innerHTML = '<p>Carregando dados...</p>';
+
 
   fetch('http://localhost:3000/produto') // ← rota correta para PRODUTO
     .then(resp => {

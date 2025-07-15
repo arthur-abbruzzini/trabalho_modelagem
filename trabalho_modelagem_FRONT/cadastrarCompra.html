@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css" />
+  <script src="./compra.js" defer></script>
+  <title>Cadastro de Compras</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="./index.html">HOME</a>
+      <a href="./listarCompra.html">Listar</a>
+      <a href="./atualizarCompra.html">Atualizar</a>
+      <a href="./apagarCompra.html">Apagar</a><br><br><br>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Cadastro de Compra</h1>
+  </main>
+
+  <label for="usuarioId">ID do Usuário</label><br>
+  <input type="number" id="usuarioId" placeholder="ID do Usuário"><br><br>
+
+  <label for="produtoId">ID do Produto</label><br>
+  <input type="number" id="produtoId" placeholder="ID do Produto"><br><br>
+
+  <label for="quantidade">Quantidade</label><br>
+  <input type="number" id="quantidade" placeholder="Quantidade"><br><br>
+
+  <label for="precoUnitario">Preço Unitário</label><br>
+  <input type="number" id="precoUnitario" placeholder="Preço Unitário" step="0.01"><br><br>
+
+  <label for="desconto">Desconto</label><br>
+  <input type="number" id="desconto" placeholder="Desconto" step="0.01" value="0"><br><br>
+
+  <label for="formaPagamento">Forma de Pagamento</label><br>
+  <input type="text" id="formaPagamento" placeholder="Ex: Cartão, Pix, Boleto"><br><br>
+
+  <label for="statusCompra">Status da Compra</label><br>
+  <input type="text" id="statusCompra" placeholder="Ex: Pendente, Confirmada, Cancelada"><br><br>
+
+  <button id="cadCompra">Cadastrar Compra</button>
+
+  <div id="res"></div>
+</body>
+</html>

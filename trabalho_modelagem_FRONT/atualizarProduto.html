@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="progatualizarProduto.js" defer></script>
+    <title>Atualizar Pedido</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="./index.html">HOME</a>
+            <a href="./cadastrarProdutoHome.html">Cadastrar</a>
+            <a href="./listarProduto.html">Listar</a>
+            <a href="./apagarProduto.html">Apagar</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Programa para atualização de Produtos</h1>
+
+        <label for="id">ID do Pedido:</label><br>
+        <input type="number" id="id" placeholder="ID do pedido"><br><br>
+
+        <label for="titulo">Título do produto</label><br>
+    <input type="text" id="titulo" placeholder="Título"><br><br>
+
+    <label for="descricao">Descrição do produto</label><br>
+    <input type="text" id="descricao" placeholder="Descrição"><br><br>
+
+    <label for="categoria">Categoria</label><br>
+    <input type="text" id="categoria" placeholder="Categoria"><br><br>
+
+    <label for="preco">Preço</label><br>
+    <input type="number" id="preco" placeholder="Preço" step="0.01"><br><br>
+
+    <label for="desconto">Desconto</label><br>
+    <input type="number" id="desconto" placeholder="Desconto" step="0.01" value="0"><br><br>
+
+    <label for="estoque">Estoque</label><br>
+    <input type="number" id="estoque" placeholder="Estoque"><br><br>
+
+    <label for="marca">Marca</label><br>
+    <input type="text" id="marca" placeholder="Marca"><br><br>
+
+    <label for="imagem">URL da imagem</label><br>
+    <input type="text" id="imagem" placeholder="URL da Imagem"><br><br>
+
+        <button id="btnAtualizar">Atualizar</button>
+        <div id="res"></div>
+    </main>
+</body>
+</html>

@@ -1,8 +1,8 @@
-// routes/produto.routes.js
 const express = require('express');
 const router = express.Router();
 const Produto = require('../model/Produtos');
 const { Op } = require('sequelize');
+const controller = require('../controller/produto.controller'); // ✅ Importa o controller
 
 // Rota para buscar produtos por intervalo de IDs
 router.get('/intervalo', async (req, res) => {
@@ -28,5 +28,15 @@ router.get('/intervalo', async (req, res) => {
     res.status(500).json({ message: 'Erro no servidor.' });
   }
 });
+
+// ✅ NOVAS ROTAS:
+router.get('/id/:id', controller.buscarPorId);
+router.get('/nome/:nome', controller.buscarPorNome);
+
+// CRUD padrão
+router.post('/', controller.cadastrar);
+router.get('/', controller.listar);
+router.delete('/:id', controller.apagar);
+router.put('/:id', controller.atualizar);
 
 module.exports = router;

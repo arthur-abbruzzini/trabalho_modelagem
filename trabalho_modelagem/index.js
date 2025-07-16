@@ -26,13 +26,12 @@ const compraController = require('./controller/compras.controller');
 
 // Importar Rotas externas
 const usuarioRoutes = require('./routes/usuario.routes');
+const produtoRoutes = require('./routes/produto.routes'); // ✅ ADICIONADA
 
 // -------------------- Rotas Usuário --------------------
 app.use('/usuario', usuarioRoutes);  // Usa todas as rotas do usuario.routes.js
 
-// ✅ ROTA ADICIONADA: Gráfico com intervalo de ID (opcional)
-// Se quiser manter aqui, tudo bem, mas a rota já existe dentro de usuario.routes.js
-// Você pode optar por remover essa duplicidade também
+// ✅ ROTA ADICIONAL (gráfico com intervalo de ID, já existe em usuario.routes.js)
 app.get('/usuario/grafico/idade/intervalo', async (req, res) => {
   const { idInicio, idFim } = req.query;
 
@@ -69,36 +68,7 @@ app.get('/', (req, res) => {
 });
 
 // -------------------- Rotas Produto --------------------
-app.post('/produto', produtoController.cadastrar);
-app.get('/produto', produtoController.listar);
-app.delete('/produto/:id', produtoController.apagar);
-app.put('/produto/:id', produtoController.atualizar);
-
-// Rota: buscar produtos por intervalo de ID
-app.get('/produto/intervalo', async (req, res) => {
-  const { idInicio, idFim } = req.query;
-
-  if (!idInicio || !idFim) {
-    return res.status(400).json({ message: 'Informe idInicio e idFim' });
-  }
-
-  try {
-    const produtos = await Produto.findAll({
-      where: {
-        id: {
-          [Op.between]: [Number(idInicio), Number(idFim)]
-        }
-      },
-      order: [['id', 'ASC']],
-      limit: 10
-    });
-
-    res.status(200).json(produtos);
-  } catch (err) {
-    console.error('Erro ao buscar produtos por intervalo:', err);
-    res.status(500).json({ message: 'Erro no servidor ao buscar produtos.' });
-  }
-});
+app.use('/produto', produtoRoutes); // ✅ USANDO ROTAS DO ARQUIVO produto.routes.js
 
 // -------------------- Rotas Compra --------------------
 app.post('/compra', compraController.cadastrar);

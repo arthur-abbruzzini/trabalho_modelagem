@@ -28,14 +28,11 @@ const compraController = require('./controller/compras.controller');
 const usuarioRoutes = require('./routes/usuario.routes');
 
 // -------------------- Rotas Usuário --------------------
-app.use('/usuario', usuarioRoutes);
+app.use('/usuario', usuarioRoutes);  // Usa todas as rotas do usuario.routes.js
 
-app.post('/usuario', usuarioController.cadastrar);
-app.get('/usuario', usuarioController.listar);
-app.delete('/usuario/:id', usuarioController.apagar);
-app.put('/usuario/:id', usuarioController.atualizar);
-
-// ✅ ROTA ADICIONADA: Gráfico com intervalo de ID
+// ✅ ROTA ADICIONADA: Gráfico com intervalo de ID (opcional)
+// Se quiser manter aqui, tudo bem, mas a rota já existe dentro de usuario.routes.js
+// Você pode optar por remover essa duplicidade também
 app.get('/usuario/grafico/idade/intervalo', async (req, res) => {
   const { idInicio, idFim } = req.query;
 

@@ -1,5 +1,6 @@
 const Usuario = require('../model/Usuario');
 
+// Cadastrar
 const cadastrar = async (req, res) => {
   const valores = req.body;
   try {
@@ -11,6 +12,7 @@ const cadastrar = async (req, res) => {
   }
 };
 
+// Listar todos
 const listar = async (req, res) => {
   try {
     const dados = await Usuario.findAll();
@@ -21,6 +23,7 @@ const listar = async (req, res) => {
   }
 };
 
+// Apagar por ID
 const apagar = async (req, res) => {
   const { id } = req.params;
   try {
@@ -32,6 +35,7 @@ const apagar = async (req, res) => {
   }
 };
 
+// Atualizar por ID
 const atualizar = async (req, res) => {
   const { id } = req.params;
   const valores = req.body;
@@ -44,4 +48,42 @@ const atualizar = async (req, res) => {
   }
 };
 
-module.exports = { cadastrar, listar, apagar, atualizar };
+// Buscar por ID
+const buscarPorId = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const usuario = await Usuario.findByPk(id);
+    if (!usuario) {
+      return res.status(404).json({ message: 'Usuário não encontrado.' });
+    }
+    res.status(200).json(usuario);
+  } catch (err) {
+    console.error('Erro ao buscar o usuário por ID!', err);
+    res.status(500).json({ message: 'Erro ao buscar o usuário por ID!' });
+  }
+};
+
+// Buscar por nome
+const buscarPorNome = async (req, res) => {
+  const { nome } = req.params;
+  try {
+    const usuarios = await Usuario.findAll({
+      where: {
+        nome: nome
+      }
+    });
+    res.status(200).json(usuarios);
+  } catch (err) {
+    console.error('Erro ao buscar o usuário por nome!', err);
+    res.status(500).json({ message: 'Erro ao buscar o usuário por nome!' });
+  }
+};
+
+module.exports = {
+  cadastrar,
+  listar,
+  apagar,
+  atualizar,
+  buscarPorId,
+  buscarPorNome
+};

@@ -7,6 +7,7 @@ btnAtualizar.addEventListener('click', (e) => {
   const id = Number(document.getElementById('id').value);
   const nome = document.getElementById('nome').value;
   const sobrenome = document.getElementById('sobrenome').value;
+  const idade = Number(document.getElementById('idade').value); // 👈 adicionado
   const email = document.getElementById('email').value;
   const telefone = document.getElementById('telefone').value;
   const endereco = document.getElementById('endereco').value;
@@ -17,6 +18,7 @@ btnAtualizar.addEventListener('click', (e) => {
   const dadosCliente = {
     nome,
     sobrenome,
+    idade, // 👈 incluído no objeto
     email,
     telefone,
     endereco,

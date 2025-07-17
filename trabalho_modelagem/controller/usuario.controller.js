@@ -1,89 +1,131 @@
 const Usuario = require('../model/Usuario');
 
-// Cadastrar
+// Cadastrar usuário
 const cadastrar = async (req, res) => {
-  const valores = req.body;
   try {
-    const dados = await Usuario.create(valores);
-    res.status(200).json(dados);
-  } catch (err) {
-    console.error('Erro ao cadastrar o usuário!', err);
-    res.status(500).json({ message: 'Erro ao cadastrar o usuário!' });
-  }
-};
+    const {
+      nome,
+      sobrenome,
+      idade,
+      email,
+      telefone,
+      endereco,
+      cidade,
+      estado,
+      nascimento
+    } = req.body;
 
-// Listar todos
-const listar = async (req, res) => {
-  try {
-    const dados = await Usuario.findAll();
-    res.status(200).json(dados);
-  } catch (err) {
-    console.error('Erro ao listar os usuários!', err);
-    res.status(500).json({ message: 'Erro ao listar os usuários!' });
-  }
-};
+    if (!nome || !sobrenome || !idade || !email || !telefone || !endereco || !cidade || !estado || !nascimento) {
+      return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
+    }
 
-// Apagar por ID
-const apagar = async (req, res) => {
-  const { id } = req.params;
-  try {
-    await Usuario.destroy({ where: { id } });
-    res.status(200).json({ message: 'Usuário removido com sucesso.' });
-  } catch (err) {
-    console.error('Erro ao apagar o usuário!', err);
-    res.status(500).json({ message: 'Erro ao apagar o usuário!' });
-  }
-};
+    const usuario = await Usuario.create({
+      nome,
+      sobrenome,
+      idade,
+      email,
+      telefone,
+      endereco,
+      cidade,
+      estado,
+      nascimento
+    });
 
-// Atualizar por ID
-const atualizar = async (req, res) => {
-  const { id } = req.params;
-  const valores = req.body;
-  try {
-    await Usuario.update(valores, { where: { id } });
-    res.status(200).json({ message: 'Usuário atualizado com sucesso.' });
-  } catch (err) {
-    console.error('Erro ao atualizar o usuário!', err);
-    res.status(500).json({ message: 'Erro ao atualizar o usuário!' });
+    res.status(201).json(usuario);
+  } catch (error) {
+    console.error('Erro ao cadastrar usuário:', error);
+    res.status(500).json({ message: 'Erro ao cadastrar usuário.' });
   }
 };
 
 // Buscar por ID
 const buscarPorId = async (req, res) => {
-  const { id } = req.params;
   try {
-    const usuario = await Usuario.findByPk(id);
+    const usuario = await Usuario.findByPk(req.params.id);
     if (!usuario) {
       return res.status(404).json({ message: 'Usuário não encontrado.' });
     }
     res.status(200).json(usuario);
-  } catch (err) {
-    console.error('Erro ao buscar o usuário por ID!', err);
-    res.status(500).json({ message: 'Erro ao buscar o usuário por ID!' });
+  } catch (error) {
+    console.error('Erro ao buscar por ID:', error);
+    res.status(500).json({ message: 'Erro ao buscar usuário.' });
   }
 };
 
 // Buscar por nome
 const buscarPorNome = async (req, res) => {
-  const { nome } = req.params;
   try {
-    const usuarios = await Usuario.findAll({
-      where: {
-        nome: nome
-      }
-    });
+    const usuarios = await Usuario.findAll({ where: { nome: req.params.nome } });
     res.status(200).json(usuarios);
-  } catch (err) {
-    console.error('Erro ao buscar o usuário por nome!', err);
-    res.status(500).json({ message: 'Erro ao buscar o usuário por nome!' });
+  } catch (error) {
+    console.error('Erro ao buscar por nome:', error);
+    res.status(500).json({ message: 'Erro ao buscar usuários.' });
+  }
+};
+
+// Atualizar usuário
+const atualizar = async (req, res) => {
+  try {
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) {
+      return res.status(404).json({ message: 'Usuário não encontrado.' });
+    }
+
+    const {
+      nome,
+      sobrenome,
+      idade,
+      email,
+      telefone,
+      endereco,
+      cidade,
+      estado,
+      nascimento
+    } = req.body;
+
+    if (!nome || !sobrenome || !idade || !email || !telefone || !endereco || !cidade || !estado || !nascimento) {
+      return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
+    }
+
+    await usuario.update({
+      nome,
+      sobrenome,
+      idade,
+      email,
+      telefone,
+      endereco,
+      cidade,
+      estado,
+      nascimento
+    });
+
+    res.status(200).json(usuario);
+  } catch (error) {
+    console.error('Erro ao atualizar usuário:', error);
+    res.status(500).json({ message: 'Erro ao atualizar usuário.' });
+  }
+};
+
+// Deletar usuário
+const deletar = async (req, res) => {
+  try {
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) {
+      return res.status(404).json({ message: 'Usuário não encontrado.' });
+    }
+
+    await usuario.destroy();
+    res.status(200).json({ message: 'Usuário deletado com sucesso.' });
+  } catch (error) {
+    console.error('Erro ao deletar usuário:', error);
+    res.status(500).json({ message: 'Erro ao deletar usuário.' });
   }
 };
 
 module.exports = {
   cadastrar,
-  listar,
-  apagar,
-  atualizar,
   buscarPorId,
-  buscarPorNome
+  buscarPorNome,
+  atualizar,
+  deletar
 };

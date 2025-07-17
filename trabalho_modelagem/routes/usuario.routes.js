@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Usuario = require('../model/Usuario');
 const { Op } = require('sequelize');
-const controller = require('../controller/usuario.controller'); // 👈 necessário para usar as novas funções
+const controller = require('../controller/usuario.controller');
 
-// Rota para gráfico de nome completo x idade (sem filtro)
+// Gráfico: nome completo x idade (sem filtro)
 router.get('/grafico-usuarios', async (req, res) => {
   try {
     const usuarios = await Usuario.findAll({
@@ -24,7 +24,7 @@ router.get('/grafico-usuarios', async (req, res) => {
   }
 });
 
-// Nova rota para gráfico filtrado por intervalo de ID
+// Gráfico com filtro por intervalo de ID
 router.get('/grafico-usuarios/intervalo', async (req, res) => {
   const { idInicio, idFim } = req.query;
 
@@ -55,15 +55,38 @@ router.get('/grafico-usuarios/intervalo', async (req, res) => {
   }
 });
 
-// 🔽 ROTAS ADICIONADAS ABAIXO 🔽
+// ✅ NOVA ROTA: Gráfico com filtro por intervalo de idade
+router.get('/grafico/idade/intervalo', async (req, res) => {
+  const { idInicio, idFim } = req.query;
 
-// Buscar usuário por ID
-router.get('/id/:id', controller.buscarPorId);
+  if (!idInicio || !idFim) {
+    return res.status(400).json({ message: 'Informe idInicio e idFim' });
+  }
 
-// Buscar usuários por nome
-router.get('/nome/:nome', controller.buscarPorNome);
+  try {
+    const usuarios = await Usuario.findAll({
+      where: {
+        idade: {
+          [Op.between]: [Number(idInicio), Number(idFim)]
+        }
+      },
+      attributes: ['nome', 'sobrenome', 'idade'],
+      order: [['idade', 'ASC']]
+    });
 
-// ✅ ROTA PARA LISTAR TODOS OS USUÁRIOS
+    const dadosGrafico = usuarios.map(u => ({
+      nomeCompleto: `${u.nome} ${u.sobrenome}`,
+      idade: u.idade
+    }));
+
+    res.json(dadosGrafico);
+  } catch (error) {
+    console.error('Erro ao buscar usuários por faixa etária:', error);
+    res.status(500).json({ message: 'Erro ao buscar dados dos usuários.' });
+  }
+});
+
+// CRUD
 router.get('/', async (req, res) => {
   try {
     const usuarios = await Usuario.findAll();
@@ -73,5 +96,11 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: 'Erro ao buscar usuários.' });
   }
 });
+
+router.get('/id/:id', controller.buscarPorId);
+router.get('/nome/:nome', controller.buscarPorNome);
+router.post('/', controller.cadastrar);
+router.put('/:id', controller.atualizar);
+router.delete('/:id', controller.deletar);
 
 module.exports = router;

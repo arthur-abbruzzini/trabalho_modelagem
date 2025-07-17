@@ -3,7 +3,7 @@ document.getElementById('graf').addEventListener('click', async () => {
   const idFim = document.getElementById('idFim').value;
 
   try {
-    const resposta = await fetch(`http://localhost:3000/usuario/grafico/idade/intervalo?idInicio=${idInicio}&idFim=${idFim}`);
+    const resposta = await fetch(`http://localhost:3000/usuario/grafico-usuarios/intervalo?idInicio=${idInicio}&idFim=${idFim}`);
 
     if (!resposta.ok) {
       throw new Error(`Erro na resposta do servidor: ${resposta.status}`);

@@ -21,7 +21,7 @@ module.exports = {
       const produtos = await Produto.findAll({
         where: {
           titulo: {
-            [Op.like]: `%${nome}%` // usa 'titulo' corretamente
+            [Op.like]: `%${nome}%`
           }
         }
       });
@@ -98,6 +98,25 @@ module.exports = {
       res.json({ message: 'Produto apagado com sucesso' });
     } catch (err) {
       res.status(500).json({ message: 'Erro ao apagar produto' });
+    }
+  },
+
+  // ✅ Estoque crítico (estoque < 10)
+  async estoqueCritico(req, res) {
+    try {
+      const produtos = await Produto.findAll({
+        where: {
+          estoque: {
+            [Op.lt]: 10
+          }
+        },
+        attributes: ['titulo', 'estoque', 'categoria']
+      });
+
+      res.json(produtos);
+    } catch (err) {
+      console.error('Erro ao buscar estoque crítico:', err);
+      res.status(500).json({ message: 'Erro ao buscar estoque crítico' });
     }
   }
 };

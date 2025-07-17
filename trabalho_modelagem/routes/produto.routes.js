@@ -33,6 +33,9 @@ router.get('/intervalo', async (req, res) => {
 router.get('/id/:id', controller.buscarPorId);
 router.get('/nome/:nome', controller.buscarPorNome);
 
+// ✅ Rota de estoque crítico
+router.get('/estoque/critico', controller.estoqueCritico);
+
 // CRUD padrão
 router.post('/', controller.cadastrar);
 router.get('/', controller.listar);
